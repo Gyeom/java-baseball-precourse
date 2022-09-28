@@ -4,6 +4,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import java.util.HashSet;
@@ -53,5 +54,16 @@ public class SetTest {
 
         // then
         assertThat(result).isTrue();
+    }
+
+    @DisplayName("ParameterizedTest & CsvSource 활용하여 중복코드 제거하고, contain 메소드 정상적으로 동작하는지 확인")
+    @ParameterizedTest(name ="{index} {displayName} input={0} ")
+    @CsvSource(value = {"1>true", "2>true", "3>true", "4>false", "5>false"}, delimiter = '>')
+    void contains3(int input, boolean expected) {
+        // when
+        boolean result = numbers.contains(input);
+
+        // then
+        assertThat(result).isEqualTo(expected);
     }
 }
