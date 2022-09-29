@@ -24,7 +24,7 @@
 
 ### BaseballNumber
 
-- `1부터 9까지` 숫자를 생성할 수 있다. [ ]
+- `1부터 9까지` 숫자를 생성할 수 있다. [V]
 
 ### BaseballNumbers
 
