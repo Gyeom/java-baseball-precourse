@@ -50,19 +50,19 @@ public class BaseballNumbers {
         return new BaseballScore(strike, ball);
     }
 
-    private boolean isStrike(BaseballNumbers baseballNumbersOfPlayer, int position) {
+    private boolean isStrike(final BaseballNumbers baseballNumbersOfPlayer, final int position) {
         return this.baseballNumbers[position].equals(baseballNumbersOfPlayer.baseballNumbers[position]);
     }
 
-    private boolean isBall(BaseballNumbers baseballNumbersOfPlayer, int position) {
-        for (int i = 0; i  < SIZE; i ++) {
-            if (i  == position) continue;
+    private boolean isBall(final BaseballNumbers baseballNumbersOfPlayer, final int position) {
+        for (int i = 0; i < SIZE; i++) {
+            if (i == position) continue;
             if (baseballNumbersOfPlayer.baseballNumbers[position].equals(this.baseballNumbers[i])) return Boolean.TRUE;
         }
         return Boolean.FALSE;
     }
 
-    public static int[] toIntArray(List<Integer> integers) {
+    public static int[] toIntArray(final List<Integer> integers) {
         int[] intArray = new int[integers.size()];
         for (int i = 0; i < intArray.length; i++) {
             intArray[i] = integers.get(i);

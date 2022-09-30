@@ -3,12 +3,30 @@ package baseball.domain;
 import static baseball.domain.JudgmentType.*;
 
 public class BaseballScore {
+    private static final int STRIKE_COUNT_OF_WIN = 3;
+
     private final int strike;
     private final int ball;
 
     public BaseballScore(int strike, int ball) {
         this.strike = strike;
         this.ball = ball;
+    }
+
+    public boolean isWin() {
+        return strike == STRIKE_COUNT_OF_WIN;
+    }
+
+    private boolean isNothing() {
+        return strike == 0 && ball == 0;
+    }
+
+    private boolean isOnlyStrike() {
+        return strike > 0 && ball == 0;
+    }
+
+    private boolean isOnlyBall() {
+        return strike == 0 && ball > 0;
     }
 
     @Override
@@ -23,18 +41,6 @@ public class BaseballScore {
             return BALL.toString(ball);
         }
         return String.format("%s %s", STRIKE.toString(strike), BALL.toString(ball));
-    }
-
-    private boolean isNothing() {
-        return strike == 0 && ball == 0;
-    }
-
-    private boolean isOnlyStrike() {
-        return strike > 0 && ball == 0;
-    }
-
-    private boolean isOnlyBall() {
-        return strike == 0 && ball > 0;
     }
 
     public int getStrike() {

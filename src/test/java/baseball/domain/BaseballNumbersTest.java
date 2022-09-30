@@ -88,4 +88,22 @@ class BaseballNumbersTest {
                 () -> assertThat(baseballScore.getBall()).isEqualTo(expectedBallCount)
         );
     }
+
+    @ParameterizedTest(name = "{displayName} [input : {arguments}]")
+    @CsvSource(value = {"123:123:true", "456:456:true",  "236:456:false", "765:567:false"}, delimiter = ':')
+    @DisplayName("3Strike 이면 승리")
+    void isWin(String computer, String player, boolean isWin) {
+        // given
+        BaseballNumbers baseballNumbersOfComputer = BaseballNumbers.of(computer);
+        BaseballNumbers baseballNumbersOfPlayer = BaseballNumbers.of(player);
+
+        // when
+        BaseballScore baseballScore = baseballNumbersOfComputer.calculateScore(baseballNumbersOfPlayer);
+
+        // then
+        assertAll(
+                () -> assertThat(baseballScore.isWin()).isEqualTo(isWin),
+                () -> assertThat(baseballScore.isWin()).isEqualTo(isWin)
+        );
+    }
 }
