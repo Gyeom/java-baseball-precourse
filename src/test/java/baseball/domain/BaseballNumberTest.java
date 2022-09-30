@@ -25,7 +25,7 @@ class BaseballNumberTest {
 
     @ParameterizedTest(name = "{displayName} [input : {arguments}]")
     @ValueSource(ints = {0, 10})
-    @DisplayName("야구 숫자 생성 실패")
+    @DisplayName("야구 숫자 생성 실패 (제한 범위 초과)")
     void initException(int input) {
         // when & then
         assertThatExceptionOfType(BaseballIllegalArgumentException.class)
