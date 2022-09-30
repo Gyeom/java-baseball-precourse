@@ -4,6 +4,7 @@ import baseball.domain.exceptions.BaseballIllegalArgumentException;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
 
 import static baseball.domain.BaseballNumber.MAX_VALUE;
@@ -66,6 +67,25 @@ class BaseballNumbersTest {
                 () -> assertThat(value2).isBetween(MIN_VALUE, MAX_VALUE),
                 () -> assertThat(value3).isBetween(MIN_VALUE, MAX_VALUE),
                 () -> assertThat((value1 != value2) && (value1 != value3) && (value2 != value3)).isTrue()
+        );
+    }
+
+    @ParameterizedTest(name = "{displayName} [input : {arguments}]")
+    @CsvSource(value = {"123:123:3:0", "236:456:1:0", "765:756:1:2", "123:456:0:0"}, delimiter = ':')
+    @DisplayName("야구 점수 계산")
+    void calculateScore(String computer, String player, int expectedStrikeCount, int expectedBallCount) {
+        // given
+        BaseballNumbers baseballNumbersOfComputer = BaseballNumbers.of(computer);
+        BaseballNumbers baseballNumbersOfPlayer = BaseballNumbers.of(player);
+
+        // when
+        BaseballScore baseballScore = baseballNumbersOfComputer.calculateScore(baseballNumbersOfPlayer);
+        System.out.println(baseballScore.toString());
+
+        // then
+        assertAll(
+                () -> assertThat(baseballScore.getStrike()).isEqualTo(expectedStrikeCount),
+                () -> assertThat(baseballScore.getBall()).isEqualTo(expectedBallCount)
         );
     }
 }

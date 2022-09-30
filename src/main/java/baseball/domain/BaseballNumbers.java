@@ -7,8 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static baseball.domain.BaseballNumber.MAX_VALUE;
-import static baseball.domain.BaseballNumber.MIN_VALUE;
+import static baseball.domain.BaseballNumber.*;
 import static baseball.domain.ConsoleMessage.EXCEPTION_DUPLICATED_BASEBALL_NUMBERS;
 import static baseball.domain.ConsoleMessage.EXCEPTION_INVALID_BASEBALL_NUMBERS;
 
@@ -39,6 +38,28 @@ public class BaseballNumbers {
     public static BaseballNumbers generateRandomNumbers() {
         List<Integer> numbers = Randoms.pickUniqueNumbersInRange(MIN_VALUE, MAX_VALUE, SIZE);
         return new BaseballNumbers(toIntArray(numbers));
+    }
+
+    public BaseballScore calculateScore(final BaseballNumbers baseballNumbersOfPlayer) {
+        int strike = 0;
+        int ball = 0;
+        for (int position = 0; position < SIZE; position++) {
+            if (isStrike(baseballNumbersOfPlayer, position)) strike++;
+            if (isBall(baseballNumbersOfPlayer, position)) ball++;
+        }
+        return new BaseballScore(strike, ball);
+    }
+
+    private boolean isStrike(BaseballNumbers baseballNumbersOfPlayer, int position) {
+        return this.baseballNumbers[position].equals(baseballNumbersOfPlayer.baseballNumbers[position]);
+    }
+
+    private boolean isBall(BaseballNumbers baseballNumbersOfPlayer, int position) {
+        for (int i = 0; i  < SIZE; i ++) {
+            if (i  == position) continue;
+            if (baseballNumbersOfPlayer.baseballNumbers[position].equals(this.baseballNumbers[i])) return Boolean.TRUE;
+        }
+        return Boolean.FALSE;
     }
 
     public static int[] toIntArray(List<Integer> integers) {
