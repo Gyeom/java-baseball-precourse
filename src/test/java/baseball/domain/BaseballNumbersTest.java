@@ -6,10 +6,13 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 
+import static baseball.domain.BaseballNumber.MAX_VALUE;
+import static baseball.domain.BaseballNumber.MIN_VALUE;
 import static baseball.domain.ConsoleMessage.EXCEPTION_DUPLICATED_BASEBALL_NUMBERS;
 import static baseball.domain.ConsoleMessage.EXCEPTION_INVALID_BASEBALL_NUMBERS;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
+import static org.junit.jupiter.api.Assertions.assertAll;
 
 @DisplayName("야구 숫자 세트 테스트")
 class BaseballNumbersTest {
@@ -18,7 +21,7 @@ class BaseballNumbersTest {
     @DisplayName("야구 숫자 세트 생성 성공")
     void init() {
         // when
-        BaseballNumbers baseballNumbers = new BaseballNumbers("123");
+        BaseballNumbers baseballNumbers = BaseballNumbers.of("123");
 
         // then
         assertThat(baseballNumbers.getBaseballNumbers()).containsExactly(
@@ -32,7 +35,7 @@ class BaseballNumbersTest {
     void initException(String input) {
         // when & then
         assertThatExceptionOfType(BaseballIllegalArgumentException.class)
-                .isThrownBy(() -> new BaseballNumbers(input))
+                .isThrownBy(() -> BaseballNumbers.of(input))
                 .withMessageMatching(EXCEPTION_INVALID_BASEBALL_NUMBERS.getMessage()
                         .replace("%d", "\\d+"));
     }
@@ -43,7 +46,26 @@ class BaseballNumbersTest {
     void initException2(String input) {
         // when & then
         assertThatExceptionOfType(BaseballIllegalArgumentException.class)
-                .isThrownBy(() -> new BaseballNumbers(input))
+                .isThrownBy(() -> BaseballNumbers.of(input))
                 .withMessageMatching(EXCEPTION_DUPLICATED_BASEBALL_NUMBERS.getMessage());
+    }
+
+    @Test
+    @DisplayName("임의의 서로 다른 숫자 3개를 생성")
+    void createRandomNumbers() {
+        // when
+        BaseballNumber[] baseballNumbers = BaseballNumbers.generateRandomNumbers().getBaseballNumbers();
+
+        // then
+        assertThat(baseballNumbers.length).isEqualTo(BaseballNumbers.SIZE);
+        int value1 = baseballNumbers[0].getValue();
+        int value2 = baseballNumbers[1].getValue();
+        int value3 = baseballNumbers[2].getValue();
+        assertAll(
+                () -> assertThat(value1).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat(value2).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat(value3).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat((value1 != value2) && (value1 != value3) && (value2 != value3)).isTrue()
+        );
     }
 }
