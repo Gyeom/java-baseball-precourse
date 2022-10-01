@@ -92,8 +92,7 @@ public class BaseballNumbers {
 
     private static void isValidNumberRange(final String value) {
         if (!value.matches(REGEX_BASEBALL_NUMBERS)) {
-            throw new BaseballIllegalArgumentException(
-                    EXCEPTION_INVALID_BASEBALL_NUMBERS, MIN_VALUE, MAX_VALUE, SIZE);
+            throw new BaseballIllegalArgumentException(EXCEPTION_INVALID_BASEBALL_NUMBERS);
         }
     }
 

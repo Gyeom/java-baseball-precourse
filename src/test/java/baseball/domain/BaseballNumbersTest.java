@@ -37,8 +37,7 @@ class BaseballNumbersTest {
         // when & then
         assertThatExceptionOfType(BaseballIllegalArgumentException.class)
                 .isThrownBy(() -> BaseballNumbers.of(input))
-                .withMessageMatching(EXCEPTION_INVALID_BASEBALL_NUMBERS.getMessage()
-                        .replace("%d", "\\d+"));
+                .withMessageMatching(EXCEPTION_INVALID_BASEBALL_NUMBERS.getMessage());
     }
 
     @ParameterizedTest(name = "{displayName} [input : {arguments}]")
