@@ -13,4 +13,8 @@ public class ConsoleView {
     public static void output(ConsoleMessage consoleMessage) {
         System.out.println(consoleMessage.getMessage());
     }
+
+    public static void output(String message) {
+        System.out.println(message);
+    }
 }

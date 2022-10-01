@@ -3,6 +3,7 @@ package baseball.domain;
 import baseball.domain.exceptions.BaseballIllegalArgumentException;
 import camp.nextstep.edu.missionutils.Randoms;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -48,7 +49,19 @@ public class BaseballNumbers {
     }
 
     private static List<Integer> pickUniqueNumberInRange() {
-        return Randoms.pickUniqueNumbersInRange(MIN_VALUE, MAX_VALUE, SIZE);
+        List<Integer> numbers = new ArrayList<>();
+        for (int i = 0; i < SIZE; i++) {
+            numbers.add(pickUniqueNumberInRange(numbers));
+        }
+        return numbers;
+    }
+
+    private static int pickUniqueNumberInRange(final List<Integer> numbers) {
+        int pickNumber;
+        do {
+            pickNumber = Randoms.pickNumberInRange(MIN_VALUE, MAX_VALUE);
+        } while (numbers.contains(pickNumber));
+        return pickNumber;
     }
 
     public BaseballScore calculateScore(final BaseballNumbers baseballNumbersOfPlayer) {

@@ -40,7 +40,7 @@ public class BaseballScore {
         if (isOnlyBall()) {
             return BALL.toString(ball);
         }
-        return String.format("%s %s", STRIKE.toString(strike), BALL.toString(ball));
+        return String.format("%s %s", BALL.toString(ball), STRIKE.toString(strike));
     }
 
     public int getStrike() {
