@@ -45,10 +45,8 @@ public class BaseballGame {
     }
 
     private void restart() {
-        do {
-            String input = ConsoleView.input(OUTPUT_BASEBALL_GAME_RESTART);
-            changeGameStatus(input);
-        } while (gameStatus == BaseballGameStatus.ERROR);
+        String input = ConsoleView.input(OUTPUT_BASEBALL_GAME_RESTART);
+        changeGameStatus(input);
         generateNewBaseballNumbers();
     }
 
