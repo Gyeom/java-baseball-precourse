@@ -52,7 +52,7 @@ class BaseballNumbersTest {
 
     @Test
     @DisplayName("임의의 서로 다른 숫자 3개를 생성")
-    void createRandomNumbers() {
+    void generateRandomNumbers() {
         // when
         BaseballNumber[] baseballNumbers = BaseballNumbers.generateRandomNumbers().getBaseballNumbers();
 
@@ -103,6 +103,27 @@ class BaseballNumbersTest {
         assertAll(
                 () -> assertThat(baseballScore.isWin()).isEqualTo(isWin),
                 () -> assertThat(baseballScore.isWin()).isEqualTo(isWin)
+        );
+    }
+
+    @Test
+    @DisplayName("임의의 서로 다른 숫자 3개를 재생성")
+    void generateRandomNumbersOfRestart() {
+        // when
+        BaseballNumbers baseballNumbers = BaseballNumbers.generateRandomNumbers();
+        baseballNumbers.generateRandomNumbersOfRestart();
+        BaseballNumber[] baseballNumbersOfRestart = baseballNumbers.getBaseballNumbers();
+
+        // then
+        assertThat(baseballNumbersOfRestart.length).isEqualTo(BaseballNumbers.SIZE);
+        int value1 = baseballNumbersOfRestart[0].getValue();
+        int value2 = baseballNumbersOfRestart[1].getValue();
+        int value3 = baseballNumbersOfRestart[2].getValue();
+        assertAll(
+                () -> assertThat(value1).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat(value2).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat(value3).isBetween(MIN_VALUE, MAX_VALUE),
+                () -> assertThat((value1 != value2) && (value1 != value3) && (value2 != value3)).isTrue()
         );
     }
 }

@@ -36,8 +36,19 @@ public class BaseballNumbers {
     }
 
     public static BaseballNumbers generateRandomNumbers() {
-        List<Integer> numbers = Randoms.pickUniqueNumbersInRange(MIN_VALUE, MAX_VALUE, SIZE);
+        List<Integer> numbers = pickUniqueNumberInRange();
         return new BaseballNumbers(toIntArray(numbers));
+    }
+
+    public void generateRandomNumbersOfRestart() {
+        List<Integer> numbers = pickUniqueNumberInRange();
+        for (int index = 0; index < numbers.size(); index++) {
+            this.baseballNumbers[index] = new BaseballNumber(numbers.get(index));
+        }
+    }
+
+    private static List<Integer> pickUniqueNumberInRange() {
+        return Randoms.pickUniqueNumbersInRange(MIN_VALUE, MAX_VALUE, SIZE);
     }
 
     public BaseballScore calculateScore(final BaseballNumbers baseballNumbersOfPlayer) {
